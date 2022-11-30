@@ -15,7 +15,7 @@ load_dotenv()
 
 Bot = Client(
     name="confess",
-    bot_token=os.environ.get("BOT_TOKEN", "5910290961:AAGScXmdRpYOhvvJW18IA3ybg7aEchnQNjU"),
+    bot_token=os.environ.get("BOT_TOKEN", "5651030839:AAGc6KBnzYuObHsmbFPUgxFB88G7h1YndAk"),
     api_id=int(os.environ.get("API_ID", "14962060")),  # type: ignore
     api_hash=os.environ.get("API_HASH", "b726ce690552a5707dd80294907f39e1"),
 )
@@ -110,7 +110,7 @@ async def cbstart(_, query: CallbackQuery):
                              InlineKeyboardButton("Penjelasan 📝", callback_data="penjelasan"),
                            ],
                            [
-                             InlineKeyboardButton("🔰 Menu 🔰", callback_data="home_ban"),
+                             InlineKeyboardButton("🔰 Menu 🔰", callback_data="cbkritik"),
                            ],
                          ]
                        ),
@@ -125,23 +125,25 @@ async def home_ban(_, query: CallbackQuery):
                        reply_markup=InlineKeyboardMarkup(
                          [
                            [
-                             InlineKeyboardButton("🗣 Kritik", callback_data="cbkritik"),
+                             InlineKeyboardButton("🗣 Kritik", callback_data="home_ban"),
                              InlineKeyboardButton("Confess 📪", callback_data="cbconfess"),
                            ]
                          ]
                        ),
                       ) 
-PVA=-1001782660352    
+
+
+PVA=-1001854811904    
 @Bot.on_callback_query(filters.regex("cbkritik"))
 async def cbkritik(client, query: CallbackQuery):
   await query.message.delete()  
   user_id = query.from_user.id
   Tujuan = await client.ask(user_id, '🗣 <b>Silakan ketik apa yang kamu ingin sampaikan kepada admin.</b>', filters=filters.text, timeout=30)
   if "/" in Tujuan.text:
-    kri = await client.ask(user_id, '<b>⚠️ Terjadi kesalahan.</b>\n__Ketikan apa yang kamu ingin katakan kepada admin__')
+    kri = await client.ask(user_id, '<b>⚠️ Terjadi kesalahan.</b>\n__Ketikan apa yang kamu ingin __')
   else:
     kri = Tujuan
-  await client.send_message(PVA, f"from {query.from_user.mention}\nisi : {kri.text}")
+  await client.send_message(PVA, f"{kri.text}")
   await client.send_message(query.from_user.id, "Kritik kamu telah terkirim")
     
 LOG=-1001874589177
@@ -182,4 +184,3 @@ async def cbconfess(client, query: CallbackQuery):
     
     
 Bot.run()
-
